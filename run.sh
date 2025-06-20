@@ -1,6 +1,7 @@
 # 检查名字是否重复 https://docs.arduino.cc/libraries/
 
 git tag -a 1.0.0
+git push origin
 git push origin --tags
 
 ################################# upload for platformio #################################
