@@ -13,12 +13,12 @@ static const int8_t kFsmTable[4][4] = {
 };
 
 FastRotaryEncoder::FastRotaryEncoder(int pinA,
-                             int pinB,
-                             int pinBtn,
-                             long minInclude,
-                             long maxExclude,
-                             int step,
-                             int usePullUp) :
+                                     int pinB,
+                                     int pinBtn,
+                                     long minInclude,
+                                     long maxExclude,
+                                     int step,
+                                     int usePullUp) :
         pinA_(pinA),
         pinB_(pinB),
         pinBtn_(pinBtn),
@@ -61,27 +61,27 @@ void FastRotaryEncoder::setup() {
 }
 
 void IRAM_ATTR FastRotaryEncoder::encoderIsrHandler(FastRotaryEncoder *ptrRotaryEncoder) {
-auto *this_ = static_cast<FastRotaryEncoder *>(ptrRotaryEncoder);
-static uint8_t prev_state = 0;
-static int8_t step_accumulator = 0;
+    auto *this_ = static_cast<FastRotaryEncoder *>(ptrRotaryEncoder);
+    static uint8_t prev_state = 0;
+    static int8_t step_accumulator = 0;
 
-int a = digitalRead(this_->pinA_);
-int b = digitalRead(this_->pinB_);
-uint8_t curr_state = (a << 1) | b;
+    int a = digitalRead(this_->pinA_);
+    int b = digitalRead(this_->pinB_);
+    uint8_t curr_state = (a << 1) | b;
 
-int8_t delta = kFsmTable[prev_state][curr_state];
-if (delta != 0) {
-step_accumulator += delta;
-if (step_accumulator == 4 || step_accumulator == -4) {
-EncoderEvent evt = {
-        .direction = (step_accumulator > 0) ? +1 : -1,
-        .timestamp_us = esp_timer_get_time()
-};
-xQueueSendFromISR(this_->encoderQueue_, &evt, nullptr);
-step_accumulator = 0;
-}
-}
-prev_state = curr_state;
+    int8_t delta = kFsmTable[prev_state][curr_state];
+    if (delta != 0) {
+        step_accumulator += delta;
+        if (step_accumulator == 4 || step_accumulator == -4) {
+            EncoderEvent evt = {
+                    .direction = (step_accumulator > 0) ? +1 : -1,
+                    .timestamp_us = esp_timer_get_time()
+            };
+            xQueueSendFromISR(this_->encoderQueue_, &evt, nullptr);
+            step_accumulator = 0;
+        }
+    }
+    prev_state = curr_state;
 }
 
 bool FastRotaryEncoder::updateMappedPosition(float speed) {
