@@ -28,7 +28,7 @@ protected:
     int usePullUp_;
 
     int step_;
-    int mappedPosition_;
+    volatile int mappedPosition_;
     long minInclude_;
     long maxExclude_;
 
