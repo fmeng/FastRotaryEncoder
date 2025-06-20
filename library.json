@@ -1,6 +1,6 @@
 {
   "name": "FastRotaryEncoder",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "keywords": "arduino,esp32,Encoder,FastRotaryEncoder",
   "description": "Supports acceleration, Freertos, Queue, Interrupt",
   "authors": [

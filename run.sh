@@ -1,6 +1,6 @@
 # 检查名字是否重复 https://docs.arduino.cc/libraries/
 
-git tag -a 1.0.0
+git tag -a 1.0.1
 git push origin
 git push origin --tags
 
@@ -16,7 +16,7 @@ pio account login
 pio pkg publish --no-interactive
 
 # 删除
-pio pkg unpublish FastRotaryEncoder@1.0.0
+pio pkg unpublish FastRotaryEncoder@1.0.1
 
 # 验证是否上传成功
 pio access list
